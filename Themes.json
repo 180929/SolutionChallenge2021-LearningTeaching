@@ -1,0 +1,55 @@
+{
+  "aa": {
+    "name": "Sciences",
+    "sous-themes": {
+      "1": {
+        "namesub": "Biology"
+      },
+      "2": {
+        "namesub": "Industry"
+      }
+    }
+  },
+  "ab": {
+    "name": "Informatics and Telecommunication"
+  },
+  "am": {
+    "name": "Administration and legislation"
+  },
+  "ar": {
+    "name": "Architecture, building, construction"
+  },
+  "as": {
+    "name": "Communication"
+  },
+  "av": {
+    "name": "Culture"
+  },
+  "ay": {
+    "name": "Economics and management"
+  },
+  "az": {
+    "name": "Environment and nature"
+  },
+  "ba": {
+    "name": "Hotel and food industry"
+  },
+  "be": {
+    "name": "Health and well-being"
+  },
+  "bg": {
+    "name": "Humanities and Social Sciences"
+  },
+  "bh": {
+    "name": "Security"
+  },
+  "bi": {
+    "name": "Technology and industries"
+  },
+  "bm": {
+    "name": "Tourism, sport and leisure"
+  },
+  "bn": {
+    "name": "Transport and logistics"
+  }
+}

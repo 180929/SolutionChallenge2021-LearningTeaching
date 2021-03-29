@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learning Teaching</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css')}}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+    <script type=text/javascript>
+        $(function() {
+            $("#theme").on("change", function(event){
+              var e = document.getElementById("theme");
+              var region = e.options[e.selectedIndex].value;
+              var sel = this.value
+              $.ajax({
+                url: '/double_liste',
+                data: {'a' : sel},
+                dataType: 'JSON',
+                type: 'POST',
+                success: function(data){
+                    $("#region1").html(data.result);
+                }
+                });
+             });
+        });
+      </script>
+
+    <style>
+        html, body {
+        height:100%;
+      }
+      body
+      {
+        background-color: #c6dcf1;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .card {
+        margin-top: 5%;
+        margin-bottom: 20px;
+
+       }
+	 .alert {
+	  padding: 12px;
+	  border-radius: 3px;
+	  font-size: 1.2rem;
+	  margin-bottom: 16px;
+	  border-width: 2px;
+	  border-style: solid;
+	  color:red;
+	}
+
+
+    </style>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="home">Learning Teaching</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="followed_courses">Followed courses</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="teached_courses">Teached courses</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="profile"> Profile</a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link" href="sign_out"> Sign out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+</head>
+
+<body>
+
+<form action="{{ url_for('research2')}}" method="POST">
+  <div class="form-row justify-content-center mt-3">
+    <div class="col col-md-9 col-sm-12">
+      <input type="text" id="keyword" name="keyword" placeholder="Enter keyword">
+    </div>
+  </div>
+
+  <div class="form-row justify-content-center mt-3">
+    <div class="col col-md-9 col-sm-12">
+        <label>Subject</label> <br>                               
+        <select class="form-control" id="theme"  name="theme" onchange="ville();" style="min-width:100%;"> 
+          <option> ... </option>
+          {% for x in topics %}
+            <option id="{{x.val()['name']}}" value="{{x.val()['name']}}">{{x.val()["name"]}} </option>
+          {% endfor %}
+        </select>
+    </div>
+  </div>
+
+  <div class="form-row justify-content-center mt-3">
+    <div class="col col-md-9 col-sm-12">
+      <div class="wrap-input100 validate-input" data-validate="Statut" id="region1">
+        <label>Sub-subject</label> <br>
+        <select class="form-control" id="region"  name="region">
+          <option> ... </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row justify-content-center mt-3">
+    <div class="col col-md-9 col-sm-12">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+  </div>
+</form>
+
+<div class="album py-5">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      	{% for x, y, z in cours %}
+          <form action="{{ url_for('details')}}" method="POST">
+  	        <div class="col">
+  	          <div class="card shadow-sm">
+  	            <img width="100%" height="100%"  src="{{url_for('static', filename='/images/' + z + '.jpg')}}"/>
+
+  	            <div class="card-body">
+  	              <p class="card-text">{{x.val()["Title"]}}<br><small class="text-muted">Author : {{y.val()["Firstname"]}} {{y.val()["Name"]}}</small></p>
+  	              <div class="d-flex justify-content-between align-items-center">
+  	                <div class="btn-group">
+                      <input type="hidden" id="x" name="x" value="{{x.val()}}">
+                      <input type="hidden" id="key" name="key" value="{{x.key()}}">
+  	                  <button type="submit" class="btn btn-sm btn-outline-secondary" href="details">View</button>
+  	                </div>
+  	                <small class="text-muted">{{x.val()["Subject"]}} <br> {{x.val()["Subsubject"]}}</small>
+  	              </div>
+  	            </div>
+  	          </div>
+  	        </div>
+          </form>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
